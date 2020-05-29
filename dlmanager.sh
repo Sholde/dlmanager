@@ -75,10 +75,28 @@ if [ -f $dl_path*.ods ] ; then
 fi
 
 # Delete the content of folder $2 in download folder
-if [ ! -z "$1" ] && [ ! -z "$2" ] ; then
+
+option="$1"
+folder="$2"
+
+have_two_args() {
+  if [ ! "$option" == "" ] && [ ! "$folder" == "" ] ; then
+    return 1;
+  else
+    return 0;
+  fi
+}
+
+if [ `have_two_args ` ] ; then
+  echo "two"
   if [ "$1" == "delete" ] ; then
+  echo "two"
     if [ -d $dl_path$2 ] ; then
-      rm $dl_path$2/*
+      if [ `ls $dl_path$2` ] ; then
+        rm $dl_path$2/*
+      else
+        echo "no file"
+      fi
     else
       echo "This folder doesn't exist"
     fi
