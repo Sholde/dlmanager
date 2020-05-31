@@ -25,5 +25,5 @@ $ ./dlmanager
 Clean one folder on your download folder :
 
 ```
-$ ./dlmanager delete [FOLDER NAME]
+$ ./dlmanager clean [FOLDER NAME]
 ```
