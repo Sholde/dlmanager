@@ -1,5 +1,7 @@
 # dlmanager
 
+It's a test project for practizing bash script.
+
 ## Installation
 
 Change download folder name :
