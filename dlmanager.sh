@@ -78,13 +78,15 @@ fi
 option="$1"
 folder="$2"
 
-if [ ! -z "${option}" ] && [ ! -z "${folder}" ] ; then
-  if [ "${option}" == "clean" ] ; then
+clean="clean"
+
+if [ ! -z ${option} ] && [ ! -z ${folder} ] ; then
+  if [ ${option} == ${clean} ] ; then
     if [ -d ${dl_path}${folder} ] ; then
       if [ `ls ${dl_path}${folder}` ] ; then
         rm ${dl_path}${folder}/*
       else
-        echo "no file"
+        echo "There are no file in folder ${folder}"
       fi
     else
       echo "This folder doesn't exist"
