@@ -4,82 +4,84 @@ user_path=~
 dl_name="Téléchargements"
 dl_path=$user_path/$dl_name/
 
-# Create pdf folder
 pdf_folder_name="pdf"
-if [ ! -d ${dl_path}${pdf_folder_name} ] ; then
-  mkdir ${dl_path}${pdf_folder_name}
-fi
-
-# Move pdf file to pdf folder
-if [ -f ${dl_path}*.pdf ] ; then
-  mv ${dl_path}*.pdf ${dl_path}${pdf_folder_name}
-fi
-
-# Create img folder
 img_folder_name="img"
-if [ ! -d ${dl_path}${img_folder_name} ] ; then
-  mkdir ${dl_path}${img_folder_name}
-fi
-
-# Move image file to img folder
-if [ -f ${dl_path}*.png ] ; then
-  mv ${dl_path}*.png ${dl_path}${img_folder_name}
-fi
-if [ -f ${dl_path}*.jpeg ] ; then
-  mv ${dl_path}*.jpeg ${dl_path}${img_folder_name}
-fi
-
-# Create archive folder
 archive_folder_name="archive"
-if [ ! -d ${dl_path}${archive_folder_name} ] ; then
-  mkdir ${dl_path}${archive_folder_name}
-fi
-
-# Move archive file to archive folder
-if [ -f ${dl_path}*.zip ] ; then
-  mv ${dl_path}*.zip ${dl_path}${archive_folder_name}
-fi
-if [ -f ${dl_path}*.tar ] ; then
-  mv ${dl_path}*.tar ${dl_path}${archive_folder_name}
-fi
-if [ -f ${dl_path}*.tar.gz ] ; then
-  mv ${dl_path}*.tar.gz ${dl_path}${archive_folder_name}
-fi
-
-# Create code folder
 code_folder_name="code"
-if [ ! -d ${dl_path}${code_folder_name} ] ; then
-  mkdir ${dl_path}${code_folder_name}
-fi
-
-# Move all code files to code folder
-if [ -f ${dl_path}*.c ] ; then
-  mv ${dl_path}*.c ${dl_path}${code_folder_name}
-fi
-if [ -f ${dl_path}*.h ] ; then
-  mv ${dl_path}*.h ${dl_path}${code_folder_name}
-fi
-
-# Create text folder
 text_folder_name="text"
-if [ ! -d ${dl_path}${text_folder_name} ] ; then
-  mkdir ${dl_path}${text_folder_name}
-fi
 
-# Move all code files to code folder
-if [ -f ${dl_path}*.txt ] ; then
-  mv ${dl_path}*.txt ${dl_path}${text_folder_name}
-fi
-if [ -f ${dl_path}*.ods ] ; then
-  mv ${dl_path}*.ods ${dl_path}${text_folder_name}
-fi
+pdf_folder_path=${dl_path}${pdf_folder_name}
+img_folder_path=${dl_path}${img_folder_name}
+archive_folder_path=${dl_path}${archive_folder_name}
+code_folder_path=${dl_path}${code_folder_name}
+text_folder_path=${dl_path}${text_folder_name}
+
+create_folder() {
+  mkdir -p ${pdf_folder_path}
+  mkdir -p ${img_folder_path}
+  mkdir -p ${archive_folder_path}
+  mkdir -p ${code_folder_path}
+  mkdir -p ${text_folder_path}
+}
+
+move_in_folder() {
+  # Move pdf file to pdf folder
+  pdf_files=${dl_path}*.pdf
+  if [ -f ${pdf_files} ] ; then
+    mv ${pdf_files} ${pdf_folder_path}
+  fi
+
+  # Move image file to img folder
+  png_files=${dl_path}*.png
+  if [ -f ${png_files} ] ; then
+    mv ${png_files} ${img_folder_path}
+  fi
+  jpeg_files=${dl_path}*.jpeg
+  if [ -f ${jpeg_files} ] ; then
+    mv ${jpeg_files} ${img_folder_path}
+  fi
+
+  # Move archive file to archive folder
+  zip_files=${dl_path}*.zip
+  if [ -f ${zip_files} ] ; then
+    mv ${zip_files} ${archive_folder_path}
+  fi
+  tar_files=${dl_path}*.tar
+  if [ -f ${tar_files} ] ; then
+    mv ${tar_files} ${archive_folder_path}
+  fi
+  tar_gz_files=${dl_path}*.tar.gz
+  if [ -f ${tar_gz_files} ] ; then
+    mv ${tar_gz_files} ${archive_folder_path}
+  fi
+
+  # Move all code files to code folder
+  c_files=${dl_path}*.c
+  if [ -f ${c_files} ] ; then
+    mv ${c_files} ${code_folder_path}
+  fi
+  h_files=${dl_path}*.h
+  if [ -f ${h_files} ] ; then
+    mv ${h_files} ${code_folder_path}
+  fi
+
+  # Move all code files to code folder
+  txt_files=${dl_path}*.txt
+  if [ -f ${txt_files} ] ; then
+    mv ${txt_files} ${text_folder_path}
+  fi
+  ods_files=${dl_path}*.ods
+  if [ -f ${ods_files} ] ; then
+    mv ${ods_files} ${text_folder_path}
+  fi
+}
 
 # Clean the content of folder $2 in download folder
-option="$1"
-folder="$2"
-clean="clean"
+clean_folder() {
+  option="$1"
+  folder="$2"
+  clean="clean"
 
-clean() {
   if [ ! -z ${option} ] && [ ! -z ${folder} ] ; then
     if [ ${option} == ${clean} ] ; then
       if [ -d ${dl_path}${folder} ] ; then
@@ -95,4 +97,8 @@ clean() {
   fi
 }
 
-clean
+# Script begin
+
+create_folder
+move_in_folder
+clean_folder $1 $2
