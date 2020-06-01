@@ -13,7 +13,7 @@ dl_name="Téléchargements"
 Example if your os is in English :
 
 ```
-dl_name="Download"
+dl_name="Downloads"
 ```
 
 ## Usage
