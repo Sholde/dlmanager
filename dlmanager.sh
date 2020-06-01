@@ -77,19 +77,22 @@ fi
 # Clean the content of folder $2 in download folder
 option="$1"
 folder="$2"
-
 clean="clean"
 
-if [ ! -z ${option} ] && [ ! -z ${folder} ] ; then
-  if [ ${option} == ${clean} ] ; then
-    if [ -d ${dl_path}${folder} ] ; then
-      if [ `ls ${dl_path}${folder}` ] ; then
-        rm ${dl_path}${folder}/*
+clean() {
+  if [ ! -z ${option} ] && [ ! -z ${folder} ] ; then
+    if [ ${option} == ${clean} ] ; then
+      if [ -d ${dl_path}${folder} ] ; then
+        if [ `ls ${dl_path}${folder}` ] ; then
+          rm ${dl_path}${folder}/*
+        else
+          echo "There are no file in folder ${folder}"
+        fi
       else
-        echo "There are no file in folder ${folder}"
+        echo "This folder doesn't exist"
       fi
-    else
-      echo "This folder doesn't exist"
     fi
   fi
-fi
+}
+
+clean
